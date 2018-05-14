@@ -2,8 +2,6 @@ require 'spec_helper'
 require 'mirage/client'
 
 describe Mirage::Client do
-
-
   before :each do
     @response = double('response').as_null_object
   end
@@ -18,6 +16,13 @@ describe Mirage::Client do
       Client.new(mirage_url).url.should == mirage_url
 
       Client.new(:url => mirage_url).url.should == mirage_url
+    end
+
+    it 'skips port if url given' do
+      mirage_url = "http://url.for.mirage"
+      Client.new(mirage_url).url.should == mirage_url
+
+      Client.new(:url => mirage_url, :port => 9001).url.should == mirage_url
     end
 
     it 'can be configured with a port refering to which port Mirage is running on on localhost' do
